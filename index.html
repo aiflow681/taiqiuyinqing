@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Cocos Creator | taiqiugame</title>
+
+  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+  <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
+
+  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- force webkit on 360 -->
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <!-- force edge on IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- force full screen on some browser -->
+  <meta name="full-screen" content="yes"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+
+  <!--fix fireball/issues/3568 -->
+  <!--<meta name="browsermode" content="application">-->
+  <meta name="x5-page-mode" content="app">
+
+  <!--<link rel="apple-touch-icon" href=".png" />-->
+  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+
+</head>
+<body>
+  <div id="GameDiv" cc_exact_fit_screen="true">
+      <div id="Cocos3dGameContainer">
+        <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
+      </div>
+    </div>
+
+  <div id="StartScreen" class="ui-screen">
+    <div class="ui-panel">
+      <div class="ui-title">台球小游戏</div>
+      <div class="ui-subtitle">点击开始进入游戏</div>
+      <div class="ui-actions">
+        <button id="StartButton" class="ui-button primary" type="button">开始游戏</button>
+        <button id="RulesButton" class="ui-button" type="button">游戏规则</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="RulesModal" class="ui-modal hidden" aria-hidden="true">
+    <div class="ui-backdrop" id="RulesBackdrop"></div>
+    <div class="ui-dialog" role="dialog" aria-modal="true" aria-labelledby="RulesTitle">
+      <div id="RulesTitle" class="ui-dialog-title">游戏规则</div>
+      <div class="ui-dialog-body">
+        <p>1. 目标：用最少的击球次数完成关卡。</p>
+        <p>2. 操作：拖动瞄准线，松开击球。</p>
+        <p>3. 进球：所有目标球进袋即过关。</p>
+        <p>4. 失败：超出步数或时间耗尽。</p>
+      </div>
+      <div class="ui-actions">
+        <button id="CloseRules" class="ui-button primary" type="button">返回</button>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- Polyfills bundle. -->
+<script src="src/file-protocol-data.js" charset="utf-8"> </script>
+<script src="src/file-protocol-patch.js" charset="utf-8"> </script>
+
+<script src="src/polyfills.bundle.js" charset="utf-8"> </script>
+
+
+<!-- SystemJS support. -->
+<script src="src/system.bundle.js" charset="utf-8"> </script>
+
+<!-- Import map (inline to support opening via file:// without CORS issues) -->
+<script type="systemjs-importmap" charset="utf-8">
+{
+  "imports": {
+    "cc": "./cocos-js/cc.js"
+  }
+}
+</script>
+
+<script>
+    (function () {
+      var started = false;
+      var startScreen = document.getElementById('StartScreen');
+      var startButton = document.getElementById('StartButton');
+      var rulesButton = document.getElementById('RulesButton');
+      var rulesModal = document.getElementById('RulesModal');
+      var rulesBackdrop = document.getElementById('RulesBackdrop');
+      var closeRules = document.getElementById('CloseRules');
+
+      function startGame() {
+        if (started) return;
+        started = true;
+        startScreen.classList.add('hidden');
+        System.import('./index.js').catch(function (err) { console.error(err); });
+      }
+
+      function openRules() {
+        rulesModal.classList.remove('hidden');
+        rulesModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeRulesModal() {
+        rulesModal.classList.add('hidden');
+        rulesModal.setAttribute('aria-hidden', 'true');
+      }
+
+      startButton.addEventListener('click', startGame);
+      rulesButton.addEventListener('click', openRules);
+      closeRules.addEventListener('click', closeRulesModal);
+      rulesBackdrop.addEventListener('click', closeRulesModal);
+    })();
+</script>
+
+</body>
+</html>
