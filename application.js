@@ -11,7 +11,7 @@ System.register([], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _export("Application", Application = /*#__PURE__*/function () {
+      _export("Application", Application = function () {
         function Application() {
           _classCallCheck(this, Application);
           this.settingsPath = 'src/settings.json';
@@ -27,13 +27,12 @@ System.register([], function (_export, _context) {
         }, {
           key: "onPostInitBase",
           value: function onPostInitBase() {
-            // cc.settings.overrideSettings('assets', 'server', '');
-            // do custom logic
+            
           }
         }, {
           key: "onPostSystemInit",
           value: function onPostSystemInit() {
-            // do custom logic
+            
           }
         }, {
           key: "start",
@@ -42,9 +41,6 @@ System.register([], function (_export, _context) {
               debugMode: false ? cc.DebugMode.INFO : cc.DebugMode.ERROR,
               settingsPath: this.settingsPath,
               overrideSettings: {
-                // assets: {
-                //      preloadBundles: [{ bundle: 'main', version: 'xxx' }],
-                // }
                 profiling: {
                   showFPS: this.showFPS
                 }

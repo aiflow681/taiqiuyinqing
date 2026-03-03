@@ -52,7 +52,7 @@
       try {
         obj[key] = value;
       } catch (err) {
-        // ignore
+        // 忽略异常
       }
     }
   }
